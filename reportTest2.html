@@ -1,0 +1,65 @@
+<!doctype html >
+<html>
+<head>
+<meta charset="utf-8">
+<title>reportTest2</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+<script>
+	var myController = angular.module('myDocumentController', []);
+	myController.controller('MyController', function($scope, $http) {
+	alert("In function");
+	$scope.items = [];
+	alert($scope.items);
+    $scope.items = function() {
+		alert("get items");
+		$http({method : 'GET',url : '/../../api/dataSets.json', headers: { 'X-Parse-Application-Id':'XXXX', 'X-Parse-REST-API-Key':'YYYY'}})
+            .success(function(data, status) {    
+				alert(items);
+                $scope.items = data;
+            })
+            .error(function(data, status) {
+                alert("Error");
+            });
+    };
+	$scope.CurrentDate = new Date();
+});
+</script>
+</head>
+
+<body ng-app="myDocumentController">	
+<table  width="957" height="181" bordercolor="blue" border="1;" ng-controller="MyController" rownumbers="true" fitColumns="true" singleSelect="true">
+  <thead >
+    <tr>
+      <td colspan="8" bgcolor="sky_blue"><header class="excel-table-header">Annual category wise family planning report</header></td>
+    </tr>
+    <tr>
+      <td colspan="4" bgcolor="sky_blue">State:Agra Division</td>
+      <td colspan="4" bgcolor="sky_blue">TimeStamp:-{{CurrentDate | date: 'dd/MM/yyyy'}} </td>
+    </tr>
+    <tr>
+      <td bgcolor="sky_blue">S.No</td>
+      <td bgcolor="sky_blue">Divison Name</td>
+      <td bgcolor="sky_blue">District Name</td>
+      <td bgcolor="sky_blue">Category</td>
+      <td bgcolor="sky_blue">Male Sterilization</td>
+      <td bgcolor="sky_blue">Female Sterilization</td>
+		<td bgcolor="sky_blue">Total</td>
+		<td bgcolor="sky_blue">IUCD</td>
+    </tr>
+	</thead>
+	  <tr ng-repeatng-repeat="item in items">
+      <td>{{item.id}}</td>
+      <td>{{item.displayName}}</td>
+      <td>{{item.id}}</td>
+      <td>{{item.displayName}}</td>
+      <td>{{item.displayName}}</td>
+      <td>{{item.id}}</td>
+	  <td>{{item.displayName}}</td>
+      <td></td>
+    </tr>
+</table>
+	
+</body>
+</html>

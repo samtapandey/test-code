@@ -1,0 +1,21 @@
+
+{
+    "version": "0.1",
+    "version": "1.0",
+    "name": "test App",
+    "description": "Report test App",
+    "launch_path": "index.html",    
+    "developer": {
+        "name": "HISP",
+        "name": "Samta Pandey",
+        "url": "http://dhis2.org"
+    },
+    "default_locale": "en",
+    "activities": {
+        "dhis": {
+            "href": "*",
+            
+			"namespace":null
+        }
+    }
+}
