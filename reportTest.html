@@ -1,0 +1,82 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <title>Report</title>
+    <header name = "Access-Control-Allow-Origin" value = "*" />
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script type="text/javascript" src="request.js"></script>
+<script>
+	
+  function getItems($scope, $http,callback) {
+  // this function accepts as argument another funtion which we will call when we get the data
+		//alert("get items");
+		Request();
+		$scope.method = 'JSONP';
+		$http({method : 'GET',url : '../../dataSets.json?id=Xd0ePcEz1nx'}).
+		then(function(response) { 
+		// got data! 
+			console.log(response.data);
+			//alert("success items"+response.data);
+            callback(response.data,$scope);
+			
+            },
+            function (error){
+            	alert("Error");
+            }    
+		);
+    
+	}
+	function onComplete(data,$scope){
+	//  this is the callback function which we will pass to getItems
+	$scope.items = data;
+	}
+	
+	var myController = angular.module('myDocumentController', []);
+	myController.controller('MyController', function($scope, $http) {
+	//alert("In function");
+	$scope.items = [];
+	// Pass callback function which will get data
+        getItems($scope, $http,onComplete);
+
+    	$scope.CurrentDate = new Date();
+});
+</script>
+</head>
+
+<body ng-app="myDocumentController">	
+<table  width="957" height="181" bordercolor="blue" border="1;" ng-controller="MyController" rownumbers="true" fitColumns="true" singleSelect="true">
+  <thead >
+    <tr>
+      <td colspan="8" bgcolor="sky_blue"><header class="excel-table-header">Annual category wise family planning report</header></td>
+    </tr>
+    <tr>
+      <td colspan="4" bgcolor="sky_blue">State:Agra Division</td>
+      <td colspan="4" bgcolor="sky_blue">TimeStamp:-{{CurrentDate | date: 'dd/MM/yyyy'}} </td>
+    </tr>
+    <tr>
+      <td bgcolor="sky_blue">S.No</td>
+      <td bgcolor="sky_blue">Divison Name</td>
+      <td bgcolor="sky_blue">District Name</td>
+      <td bgcolor="sky_blue">Category</td>
+      <td bgcolor="sky_blue">Male Sterilization</td>
+      <td bgcolor="sky_blue">Female Sterilization</td>
+		<td bgcolor="sky_blue">Total</td>
+		<td bgcolor="sky_blue">IUCD</td>
+    </tr>
+	</thead>
+	  <tr ng-repeat="item in items.dataSets">
+      <td>{{item.id}}</td>
+      <td>{{item.displayName}}</td>
+      <td>{{item.id}}</td>
+      <td>{{item.displayName}}</td>
+      <td>{{item.displayName}}</td>
+      <td>{{item.id}}</td>
+	  <td>{{item.displayName}}</td>
+      <td>{{item.id}}</td>
+    </tr>
+</table>
+	
+</body>
+</html>
